@@ -17,55 +17,116 @@ const cardObjectDefinitions = [
 </div>
 */
 
-function createCards(){
+function createCards()
+{
+    cardObjectDefinitions.forEach((cardItem)=>{
+        createCard(cardItem)
+    })
+}
+createCards()
 
-    const card = createElement('div');
-    const cardInner = createElement('div');
-    const cardFront = createElement('div');
-    const cardBack = createElement('div');
+function createCard(cardItem){
 
-    //give class name
+    //create div elements that make up a card
+    const cardElem = createElement('div')
+    const cardInnerElem = createElement('div')
+    const cardFrontElem = createElement('div')
+    const cardBackElem = createElement('div')
 
-    giveClassname(card, "card");
-    giveClassname(cardInner, "card-inner");
-    giveClassname(cardFront, "card-front");
-    giveClassname(cardBack, "card-back");
+    //create front and back image elements for a card
+    const cardFrontImg = createElement('img')
+    const cardBackImg = createElement('img')
+
+    //add class and id to card element
+    addClassToElement(cardElem, 'card')
+    addClassToElement(cardElem, 'fly-in')
+    addIdToElement(cardElem, cardItem.id)
+
+    //add class to inner card element
+    addClassToElement(cardInnerElem, 'card-inner')
     
-    //give id's
+    //add class to front card element
+    addClassToElement(cardFrontElem, 'card-front')
 
-    giveids(cardFront, "front");
-    giveids(cardBack, "back");
-    //add image
+    //add class to back card element
+    addClassToElement(cardBackElem, 'card-back')
 
-    addimg("front", "/images/card-AceSpades.png");
-    addimg("back", "/images/card-back-Blue.png");
+    //add src attribute and appropriate value to img element - back of card
+    addSrcToImageElem(cardBackImg, cardBackImgPath)
 
-    //parent-child tree struct
-    parentChild(cardInner,cardFront);
-    parentChild(cardInner,cardBack);
-    parentChild(card,cardInner);
+    //add src attribute and appropriate value to img element - front of card
+    addSrcToImageElem(cardFrontImg, cardItem.imagePath)
+
+    //assign class to back image element of back of card
+    addClassToElement(cardBackImg, 'card-img')
+   
+    //assign class to front image element of front of card
+    addClassToElement(cardFrontImg, 'card-img')
+
+    //add front image element as child element to front card element
+    addChildElement(cardFrontElem, cardFrontImg)
+
+    //add back image element as child element to back card element
+    addChildElement(cardBackElem, cardBackImg)
+
+    //add front card element as child element to inner card element
+    addChildElement(cardInnerElem, cardFrontElem)
+
+    //add back card element as child element to inner card element
+    addChildElement(cardInnerElem, cardBackElem)
+
+    //add inner card element as child element to card element
+    addChildElement(cardElem, cardInnerElem)
+
+    //add card element as child element to appropriate grid cell
+    addCardToGridCell(cardElem)
+
+    
+
 
 }
+function createElement(elemType){
+    return document.createElement(elemType)
 
-
-function createElement(ele){
-   return document.createElement(ele);
+}
+function addClassToElement(elem, className){
+    elem.classList.add(className)
+}
+function addIdToElement(elem, id){
+    elem.id = id
+}
+function addSrcToImageElem(imgElem, src){
+    imgElem.src = src
+}
+function addChildElement(parentElem, childElem){
+    parentElem.appendChild(childElem)
 }
 
-function giveClassname(element, className){
-   element.classList.add(className);
-}
+function addCardToGridCell(card)
+{
+    const cardPositionClassName = mapCardIdToGridCell(card)
 
-function giveids(element, id){
-   element.setAttribute("id", id);
-}
+    const cardPosElem = document.querySelector(cardPositionClassName)
 
-function addimg(id, src){
-   var parent = document.getElementById(id);
-   var image = document.createElement('img');
-   image.src = src;
-   parent.appendChild(image);
+    addChildElement(cardPosElem, card)
+
 }
-function  parentChild(ele1,ele2){
-    ele1.appendChild(ele2);
+function mapCardIdToGridCell(card){
+   
+    if(card.id == 1)
+    {
+        return '.card-pos-a'
+    }
+    else if(card.id == 2)
+    {
+        return '.card-pos-b'
+    }
+    else if(card.id == 3)
+    {
+        return '.card-pos-c'
+    }
+    else if(card.id == 4)
+    {
+        return '.card-pos-d'
+    }
 }
