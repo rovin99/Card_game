@@ -16,7 +16,7 @@ main{
     height: 55%;
     display: flex;
     justify-content: center;
-    border: 2px solid black;
+   
 }
 header{
     text-align: center;
@@ -70,25 +70,30 @@ header{
     grid-template-areas: "a b"
                          "c d";
   
-  border: 2px solid black;
+  
 }
 .card-pos-a{
     grid-area: a;
-    background-color: gray;
-    border: 2px solid black;
-}
+    margin-bottom: 20px;
+    
 .card-pos-b{
     grid-area: b;
-    background-color: goldenrod;
-    border: 2px solid black;
+    
+    
 }
 .card-pos-c{
     grid-area: c;
-     background-color: rosybrown; 
-     border: 2px solid black;
+      
+   
 }
 .card-pos-d{
     grid-area: d;
-    background-color: darkcyan;
-    border: 2px solid black;
+    
+    
 }
+.card-pos-a, .card-pos-b,.card-pos-c,.card-pos-d{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
