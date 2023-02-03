@@ -16,15 +16,54 @@ const cardObjectDefinitions = [
                 </div>
 </div>
 */
+const cardBackImgPath = '/images/card-back-blue.png'
+let cards=[];
+const cardContainerElem = document.querySelector('.card-container')
 
+const collapsedGridAreaTemplate = '"a a" "a a"'
+const cardCollectionCellClass = ".card-pos-a"
 function createCards()
 {
     cardObjectDefinitions.forEach((cardItem)=>{
         createCard(cardItem)
     })
 }
-createCards()
 
+loadGame();
+function loadGame(){
+   createCards();
+   
+   cards = document.querySelectorAll('.card');
+
+   btn.addEventListener('click',()=>startGame());
+
+}
+
+function startGame(){
+    initializeNewRound();
+    startRound();
+}
+function initializeNewRound(){
+
+
+}
+function startRound(){
+    collectCards();
+}
+function collectCards(){
+    transformGridArea(collapsedGridAreaTemplate);
+    addCardToGridAreaCell(cardCollectionCellClass)
+
+}
+function transformGridArea(areas){
+    cardContainerElem.style.gridTemplateAreas = areas
+}
+function addCardToGridAreaCell(cellPositionClassName){
+    const cellPositionElem = document.querySelector(cellPositionClassName)
+    cards.forEach((card, index) =>{
+        addChildElement(cellPositionElem, card)
+    })
+}
 function createCard(cardItem){
 
     //create div elements that make up a card
