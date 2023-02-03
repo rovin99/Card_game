@@ -1,3 +1,4 @@
+//a list of objects of cards
 const cardObjectDefinitions = [
     {id:1, imagePath:'/images/card-KingHearts.png'},
     {id:2, imagePath:'/images/card-JackClubs.png'},
@@ -16,12 +17,18 @@ const cardObjectDefinitions = [
                 </div>
 </div>
 */
+//backimage of all cards
 const cardBackImgPath = '/images/card-back-blue.png'
+//storing all card elements
 let cards=[];
+//main container of card div
 const cardContainerElem = document.querySelector('.card-container')
-
+//grid template when the game will start
 const collapsedGridAreaTemplate = '"a a" "a a"'
+//cell where all cards will stack up
 const cardCollectionCellClass = ".card-pos-a"
+
+
 function createCards()
 {
     cardObjectDefinitions.forEach((cardItem)=>{
@@ -119,9 +126,6 @@ function createCard(cardItem){
 
     //add card element as child element to appropriate grid cell
     addCardToGridCell(cardElem)
-
-    
-
 
 }
 function createElement(elemType){
