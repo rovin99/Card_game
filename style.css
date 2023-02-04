@@ -96,4 +96,7 @@ header{
     justify-content: center;
     align-items: center;
 }
+.card-inner.flip-it{
+    transform: rotateY(180deg);
+}
 
