@@ -27,6 +27,8 @@ const cardContainerElem = document.querySelector('.card-container')
 const collapsedGridAreaTemplate = '"a a" "a a"'
 //cell where all cards will stack up
 const cardCollectionCellClass = ".card-pos-a"
+const numCards=4; //total cards
+let cardPos=[];  //for card its id is stored
 
 
 function createCards()
@@ -49,7 +51,9 @@ function loadGame(){
 function startGame(){
     initializeNewRound();
     startRound();
-    flipCards(true);
+    //flipCards(true);
+    shuffleCards();
+
 }
 function initializeNewRound(){
 
@@ -94,6 +98,77 @@ function flipCards(flipToBack){
             flipCard(card,flipToBack)
         },index * 100)
     })
+}
+
+function shuffleCards(){
+
+    const id=setInterval(shuffle,12);
+    let shuffleCount=0;
+
+    function shuffle(){
+
+        randomieCardPos();
+
+        if(shuffleCount<500){
+            shuffleCount++;
+        }
+        else{
+            clearInterval(id);
+            dealCards();
+        }
+    }
+}
+
+function dealCards(){
+    addCardstoRightCell(); //adding the cards back to grid
+    const areasTemplate=returnGridAreasMappedtoCardPos(); //new grid template area after randomied positions
+
+    transformGridArea(areasTemplate);
+}
+
+function returnGridAreasMappedtoCardPos(){
+
+    let firstPart='';
+    let secondPart='';
+    let areas='';
+    cards.forEach((card,index)=>{
+
+        if(cardPos[index]==1){
+            areas=areas+"a";
+        }
+        else if(cardPos[index]==2){
+            areas=areas+"b";
+        }
+        else if(cardPos[index]==3){
+            areas=areas+"c";
+        }
+        else if(cardPos[index]==4){
+            areas=areas+"d";
+        }
+        if(index==1){
+            firstPart=areas.substring(0,areas.length-1);
+            areas='';
+        }
+        else if(index==3){
+            secondPart=areas.substring(0,areas.length-1)
+        }
+        
+    })
+    return `"${firstPart}" "${secondPart}"`;
+}
+function addCardstoRightCell(){
+
+    cards.forEach((card)=>{
+        addCardToGridCell(card);
+    })
+}
+function randomieCardPos(){
+    const random1=Math.floor(Math.random*numCards)+1;
+    const random2=Math.floor(Math.random()*numCards)+1;
+
+    let temp=cardPos[random1-1];
+    cardPos[random1-1]=cardPos[random2-1];
+    cardPos[random2 -1]=temp;
 }
 function createCard(cardItem){
 
@@ -151,6 +226,13 @@ function createCard(cardItem){
     //add card element as child element to appropriate grid cell
     addCardToGridCell(cardElem)
 
+    //storing the cards id
+    initializeCardPositions(cardElem)
+
+}
+function initializeCardPositions(card){
+
+    cardPos.push(card.id);
 }
 function createElement(elemType){
     return document.createElement(elemType)
